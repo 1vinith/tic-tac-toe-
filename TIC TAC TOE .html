@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .scores {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .score-column {
+            flex: 1;
+            text-align: center;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 5px;
+            justify-content: center;
+        }
+
+        .cell {
+            background-color: #ddd;
+            border: 1px solid #ccc;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            cursor: pointer;
+        }
+
+        .cell:hover {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tic Tac Toe</h1>
+        <div class="scores">
+            <div class="score-column" id="player1-score">Player 1: 0</div>
+            <div class="score-column" id="player2-score">Player 2: 0</div>
+        </div>
+        <div class="board" id="board">
+            <div class="cell" id="cell-0" onclick="handleClick(0)"></div>
+            <div class="cell" id="cell-1" onclick="handleClick(1)"></div>
+            <div class="cell" id="cell-2" onclick="handleClick(2)"></div>
+            <div class="cell" id="cell-3" onclick="handleClick(3)"></div>
+            <div class="cell" id="cell-4" onclick="handleClick(4)"></div>
+            <div class="cell" id="cell-5" onclick="handleClick(5)"></div>
+            <div class="cell" id="cell-6" onclick="handleClick(6)"></div>
+            <div class="cell" id="cell-7" onclick="handleClick(7)"></div>
+            <div class="cell" id="cell-8" onclick="handleClick(8)"></div>
+        </div>
+    </div>
+
+    <script>
+        let currentPlayer = 1;
+        let player1Score = 0;
+        let player2Score = 0;
+        let board = ['', '', '', '', '', '', '', '', ''];
+
+        function handleClick(index) {
+            if (!board[index]) {
+                const cell = document.getElementById(`cell-${index}`);
+                board[index] = currentPlayer === 1 ? 'X' : 'O';
+                cell.textContent = board[index];
+                checkWinner();
+                currentPlayer = currentPlayer === 1 ? 2 : 1;
+            }
+        }
+
+        function checkWinner() {
+            const winningCombos = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+
+            for (let combo of winningCombos) {
+                const [a, b, c] = combo;
+                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    announceWinner(board[a]);
+                    return;
+                }
+            }
+
+            if (!board.includes('')) {
+                announceDraw();
+            }
+        }
+
+        function announceWinner(player) {
+            alert(`Player ${player} wins!`);
+            updateScores(player);
+            resetBoard();
+        }
+
+        function announceDraw() {
+            alert("It's a draw!");
+            resetBoard();
+        }
+
+        function updateScores(player) {
+            if (player === 'X') {
+                player1Score++;
+                document.getElementById('player1-score').textContent = `Player 1: ${player1Score}`;
+            } else {
+                player2Score++;
+                document.getElementById('player2-score').textContent = `Player 2: ${player2Score}`;
+            }
+        }
+
+        function resetBoard() {
+            board = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 1;
+            const cells = document.getElementsByClassName('cell');
+            for (let cell of cells) {
+                cell.textContent = '';
+            }
+        }
+    </script>
+</body>
+</html>
