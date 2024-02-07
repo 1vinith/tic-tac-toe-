@@ -31,6 +31,7 @@ Game Board:
 The handleClick(index) function is called when a cell is clicked. It updates the board state, checks for a winner, and updates the scores accordingly.
 JavaScript:
 
+
 Contains the script to handle game logic.
 Manages player turns, checks for a winner or draw, updates scores, and resets the board.
 Functions:
