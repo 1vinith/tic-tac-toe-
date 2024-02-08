@@ -15,6 +15,7 @@ Title and Styles:
 Body Section:
 
 Contains the visible content of the webpage.
+
 Container and Heading:
 
 <div class="container">: Provides a container for the game elements.
